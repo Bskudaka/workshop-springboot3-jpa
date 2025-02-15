@@ -64,6 +64,10 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public Double getSubTotal(){
+        return getQuantity() * getPrice();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -75,4 +79,5 @@ public class OrderItem implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
