@@ -2,6 +2,7 @@ package com.educandoweb.course.resources.exceptions;
 
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,13 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(sError);
     }
 
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<StandardError> dataBase(EntityNotFoundException e, HttpServletRequest request){
+        String error = "User not found";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError sError = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(sError);
+    }
 
 }
